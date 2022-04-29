@@ -51,19 +51,18 @@ static const char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", };
+static const char *tags[] = { "", "", "", "", };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class           instance       title       tags mask     isfloating   monitor */
-    { "st-256color",   NULL,          NULL,       1 << 0,       0,           -1 },
-    { "google-chrome", NULL,          NULL,       1 << 1,       0,           -1 },
-    { "qutebrowser",   NULL,          NULL,       1 << 1,       0,           -1 },
- /* { "Gimp",          NULL,          NULL,       0,            1,           -1 }, */
- /* { "Firefox",       NULL,          NULL,       1 << 8,       0,           -1 }, */
+	/* class            instance    title       tags mask   isfloating  monitor */
+    { "st-256color",    NULL,       NULL,       1 << 0,     0,          -1 },
+    { "google-chrome",  NULL,       NULL,       1 << 1,     0,          -1 },
+    { "qutebrowser",    NULL,       NULL,       1 << 1,     0,          -1 },
+    { "Steam",          NULL,       NULL,       1 << 2,     0,          -1 },
 };
 
 /* layout(s) */
@@ -114,7 +113,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
-    { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -128,6 +126,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
+	TAGKEYS(                        XK_4,                      3)
     { MODKEY|ShiftMask,             XK_q,      quit,           {1} },
     { MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {0} },
 };
