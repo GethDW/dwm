@@ -2,39 +2,68 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int gappx     = 2;        /* gaps between windows */
+static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Consolas:pixelsize=14:antialias=true:autohint=true" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-	[SchemeStatus]  = { col_gray3, col_gray1,  "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { col_gray4, col_cyan,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]  = { col_gray3, col_gray1,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]  = { col_gray4, col_cyan,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]  = { col_gray3, col_gray1,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+
+static const char *fonts[]          = {
+    "Consolas:pixelsize=14:antialias=true:autohint=true",
+    "Font Awesome 6 Free:style=solid,regular:pixelsize=12:antialias=true:autohint=true",
+    "Font Awesome 6 Brands:style=solid,regular:pixelsize=12:antialias=true:autohint=true",
+};
+static const char dmenufont[] = "Consolas:pixelsize=14:antialias=true:autohint=true";
+
+/* 8 normal colors
+"#000000", black  
+"#ff5555", red    
+"#50fa7b", green  
+"#f1fa8c", yellow 
+"#bd93f9", blue   
+"#ff79c6", magenta
+"#8be9fd", cyan   
+"#bbbbbb", white */
+/* 8 bright colors
+"#44475a", black  
+"#ff5555", red    
+"#50fa7b", green  
+"#f1fa8c", yellow 
+"#bd93f9", blue   
+"#ff79c6", magenta
+"#8be9fd", cyan   
+"#ffffff", white */
+static const char col_gray1[]  = "#222222";
+static const char col_gray2[]  = "#444444";
+static const char col_gray3[]  = "#bbbbbb";
+static const char col_gray4[]  = "#eeeeee";
+static const char col_pink[]   = "#ff79c6";
+static const char col_cyan[]   = "#8be9fd";
+static const char *colors[][3] = {
+	/*                   fg          bg          border   */
+	[SchemeNorm]     = { col_gray3,  col_gray1,  col_gray2 },
+	[SchemeSel]      = { col_gray1,  col_pink,   col_pink  },
+	[SchemeStatus]   = { col_cyan,   col_gray1,  "#000000" }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { col_gray1,  col_cyan,   "#000000" }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm] = { "#FFFFFF",  col_gray1,  "#000000" }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]  = { col_gray1,  col_pink,   "#000000" }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm] = { "#FFFFFF",  col_gray1,  "#000000" }, // infobar middle  unselected {text,background,not used but cannot be empty}
+                                                              // colors[SchemeInfoSel][2] actually uses colors[SchemeSel][2]???
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class           instance       title       tags mask     isfloating   monitor */
+    { "st-256color",   NULL,          NULL,       1 << 0,       0,           -1 },
+    { "google-chrome", NULL,          NULL,       1 << 1,       0,           -1 },
+    { "qutebrowser",   NULL,          NULL,       1 << 1,       0,           -1 },
+ /* { "Gimp",          NULL,          NULL,       0,            1,           -1 }, */
+ /* { "Firefox",       NULL,          NULL,       1 << 8,       0,           -1 }, */
 };
 
 /* layout(s) */
@@ -46,9 +75,8 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-    { "[]=",      tile },
+    { "[-]",      tile },
     { "[M]",      monocle },
-    /* { "[\\]",     dwindle }, */
 };
 
 /* key definitions */
@@ -64,17 +92,18 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_pink, "-sf", "#000000", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *browsercmd[]  = { "qutebrowser", NULL };
 
 /* startup programs */
-static const char** startup_programs[] = { termcmd, NULL };
+static const char** startup_programs[] = { /*termcmd,*/ NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+    { MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -92,23 +121,13 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_J,      setgaps,        {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_K,      setgaps,        {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_J,      setgaps,        {.i = -10 } },
+	{ MODKEY|ControlMask,           XK_K,      setgaps,        {.i = +10 } },
 	/* { MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } }, */
-    // TAGKEYS doesn't work with 0 because of the `1 << TAG`
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0} },
-    { MODKEY|ControlMask,           XK_0,      toggleview,     {.ui = ~0} }, \
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_0,      toggletag,      {.ui = ~0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
     { MODKEY|ShiftMask,             XK_q,      quit,           {1} },
     { MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {0} },
 };
