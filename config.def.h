@@ -51,7 +51,7 @@ static const char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", };
+static const char *tags[] = { "", "", "", "", "", };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -59,10 +59,12 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class            instance    title       tags mask   isfloating  monitor */
-    { "st-256color",    NULL,       NULL,       1 << 0,     0,          -1 },
-    { "google-chrome",  NULL,       NULL,       1 << 1,     0,          -1 },
-    { "qutebrowser",    NULL,       NULL,       1 << 1,     0,          -1 },
-    { "Steam",          NULL,       NULL,       1 << 2,     0,          -1 },
+    { "st-256color",    NULL,       NULL,       1 << 0,     0,          2 },
+    { "firefox",        NULL,       NULL,       1 << 1,     0,          1 },
+    { "google-chrome",  NULL,       NULL,       1 << 1,     0,          1 },
+    { "qutebrowser",    NULL,       NULL,       1 << 1,     0,          1 },
+    { "discord",        NULL,       NULL,       1 << 2,     0,          1 },
+    { "Steam",          NULL,       NULL,       1 << 3,     0,          1 },
 };
 
 /* layout(s) */
@@ -91,9 +93,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_pink, "-sf", "#000000", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-p", "Run:", "-l", "10", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_pink, "-sf", "#000000", NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *browsercmd[]  = { "qutebrowser", NULL };
+static const char *browsercmd[]  = { "firefox", NULL };
 
 /* startup programs */
 static const char** startup_programs[] = { /*termcmd,*/ NULL };
