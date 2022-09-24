@@ -11,6 +11,7 @@ static const char *fonts[]          = {
     "Consolas:pixelsize=14:antialias=true:autohint=true",
     "Font Awesome 6 Free:style=solid,regular:pixelsize=12:antialias=true:autohint=true",
     "Font Awesome 6 Brands:style=solid,regular:pixelsize=12:antialias=true:autohint=true",
+	"Symbols Nerd Font:pixelsize=12:antialias=true:autohint=true",
 };
 static const char dmenufont[] = "Consolas:pixelsize=14:antialias=true:autohint=true";
 
