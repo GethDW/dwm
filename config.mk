@@ -34,5 +34,3 @@ LDFLAGS  = ${LIBS}
 #CFLAGS = -fast ${INCS} -DVERSION=\"${VERSION}\"
 #LDFLAGS = ${LIBS}
 
-# compiler and linker
-CC = zig cc

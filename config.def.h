@@ -97,15 +97,19 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-p", "Run:", "-l", "10", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_pink, "-sf", "#000000", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
+static const char *discordcmd[] = { "discord", NULL };
+static const char *kakstupcmd[] = { "kak", "-d", "-s", "dwm", "-e", "cd", "/home/gethin", NULL };
+static const char *kakcmd[] = { "st", "-e", "kak", "-c", "dwm", NULL };
 
 /* startup programs */
-static const char** startup_programs[] = { /*termcmd,*/ NULL };
+static const char** startup_programs[] = { browsercmd, discordcmd, kakstupcmd, NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
     { MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
+    { MODKEY,                       XK_e,      spawn,          {.v = kakcmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
